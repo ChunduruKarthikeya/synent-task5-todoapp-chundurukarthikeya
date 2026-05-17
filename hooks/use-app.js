@@ -5,7 +5,6 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [activeTab, setActiveTab] = useState("tasks");
   const [searchQuery, setSearchQuery] = useState("");
   const [tasks, setTasks] = useState([]);
 
@@ -30,8 +29,6 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider 
       value={{ 
-        activeTab, 
-        setActiveTab, 
         searchQuery, 
         setSearchQuery,
         activeCount,

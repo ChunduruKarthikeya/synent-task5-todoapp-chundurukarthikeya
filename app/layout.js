@@ -11,11 +11,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import { ThemeProvider } from "@/components/theme-provider";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar.jsx";
-import { SiteHeader } from "@/components/site-header";
-import { Footer } from "@/components/footer";
 import { AppProvider } from "@/hooks/use-app";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -34,16 +29,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}>
         <AppProvider>
           <TooltipProvider>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <SiteHeader />
-                <div className="flex flex-1 flex-col p-4 md:p-8">
-                  {children}
-                </div>
-                <Footer />
-              </SidebarInset>
-            </SidebarProvider>
+            {children}
             <Toaster position="top-center" expand={false} richColors />
           </TooltipProvider>
         </AppProvider>

@@ -13,16 +13,18 @@ import {
 import { Input } from "@/components/ui/input"
 import { Search, X } from "lucide-react"
 import { useApp } from "@/hooks/use-app"
+import { usePathname } from "next/navigation"
 
 export function SiteHeader() {
-  const { activeTab, searchQuery, setSearchQuery } = useApp();
+  const { searchQuery, setSearchQuery } = useApp();
+  const pathname = usePathname();
 
   const getBreadcrumb = () => {
-    switch(activeTab) {
-      case "pomodoro": return "Focus Mode";
-      case "stats": return "Analytics";
-      default: return "All Tasks";
-    }
+    if (!pathname) return "All Tasks";
+    if (pathname.includes("focus")) return "Focus Mode";
+    if (pathname.includes("analytics")) return "Analytics";
+    if (pathname.includes("privacy")) return "Privacy Policy";
+    return "All Tasks";
   };
 
   return (

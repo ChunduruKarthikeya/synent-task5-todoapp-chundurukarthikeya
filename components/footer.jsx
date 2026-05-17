@@ -11,12 +11,12 @@ export function Footer() {
           </div>
           
           <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-slate-500 font-serif">
-            <a href="#" className="hover:text-slate-900 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-slate-900 transition-colors">Terms</a>
-            <a href="#" className="hover:text-slate-900 transition-colors">Support</a>
+            <a href="/privacy" className="hover:text-slate-900 transition-colors">Privacy</a>
+            <a href="/terms" className="hover:text-slate-900 transition-colors">Terms</a>
+            
           </div>
           
-          <div className="text-sm text-slate-400 font-serif">
+          <div className="text-sm font-serif">
             © {new Date().getFullYear()} Taskify Labs. All rights reserved.
           </div>
         </div>

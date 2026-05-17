@@ -1,46 +1,44 @@
 "use client"
-
-import { Navbar } from "@/components/navbar"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 
 const privacyEntries = [
   {
-    date: "Last Updated",
-    version: "May 16, 2026",
+    date: "Data Collection",
+    version: "What we collect",
     title: "1. Information We Collect",
     changes: [
       {
-        type: "Account",
-        description: "Personal Details: Email, name, and profile information provided during registration to personalize and sync your productivity experience.",
-      },
-      {
         type: "Tasks",
-        description: "Task Management: Your lists, project titles, task descriptions, and due dates, stored securely to ensure you never miss a deadline.",
+        description: "Task Management: We securely store your tasks, due dates, and completion statuses to provide a seamless organization experience.",
       },
       {
-        type: "Usage",
-        description: "Interaction Logs: Anonymous data on how you use Taskify, used strictly to optimize performance and squash bugs.",
+        type: "Analytics",
+        description: "Stats Dashboard: We process your task history locally to generate your personal productivity insights. These analytics are entirely private.",
+      },
+      {
+        type: "Focus",
+        description: "Pomodoro Timer: Focus session durations and timer settings are used solely to facilitate your productivity workflows.",
       }
     ]
   },
   {
     date: "Infrastructure",
-    version: "Trusted Partners",
+    version: "Storage & Processing",
     title: "2. Data Processing & Storage",
     changes: [
       {
         type: "Storage",
-        description: "Secure Databases: We use enterprise-grade PostgreSQL to store your task data with high-level encryption and redundancy.",
+        description: "Secure Databases: Your task data and productivity metrics are stored securely with high-level encryption and redundancy.",
       },
       {
-        type: "Sync",
-        description: "Cloud Integration: Secure APIs used for optional calendar synchronization and cross-device data consistency.",
+        type: "Privacy",
+        description: "No Third-Party Ads: We strictly never sell your personal data, task contents, or productivity statistics to advertisers.",
       },
       {
-        type: "Workflows",
-        description: "Automation Engines: Reliable background services to manage recurring tasks, notifications, and scheduled reminders.",
+        type: "Control",
+        description: "Data Ownership: You retain full ownership of your data and can request deletion of your account and all associated tasks at any time.",
       }
     ]
   },
@@ -51,15 +49,11 @@ const privacyEntries = [
     changes: [
       {
         type: "Security",
-        description: "Transit Encryption: All data sent between your device and our servers is encrypted using industry-standard SSL/TLS protocols.",
-      },
-      { 
-        type: "Security",
-        description: "Access Control: We use robust authentication protocols to ensure only you can access your personal task lists.",
+        description: "Transit Encryption: All data sent between your device and Taskify's servers is encrypted using industry-standard SSL/TLS protocols.",
       },
       {
-        type: "Security",
-        description: "Isolation: User data is stored in isolated environments with strict monitoring to prevent unauthorized access.",
+        type: "Anonymity",
+        description: "Telemetry: Any usage data collected to improve performance or squash bugs is strictly anonymized.",
       }
     ]
   }
@@ -119,13 +113,13 @@ const PrivacyPage = () => {
                                             
                                             <div className="space-y-4">
                                                 {entry.changes.map((change, changeIdx) => (
-                                                    <Card key={changeIdx} className="border-none bg-slate-50/50 backdrop-blur-sm rounded-2xl shadow-sm">
-                                                        <CardContent className="p-4 text-left">
+                                                    <Card key={changeIdx} className="border-none shadow-lg bg-white/70 backdrop-blur-xl rounded-[2rem] overflow-hidden">
+                                                        <CardContent className="p-5 text-left">
                                                             <div className="flex items-start gap-3">
-                                                                <Badge className="shrink-0 text-[10px] mt-0.5 bg-white border-slate-100 text-slate-500 font-serif" variant="outline">
+                                                                <Badge className="shrink-0 text-[11px] mt-0.5 bg-slate-100 border-none text-slate-700 font-serif shadow-sm" variant="secondary">
                                                                     {change.type}
                                                                 </Badge>
-                                                                <p className="text-sm leading-relaxed text-slate-500 font-serif">
+                                                                <p className="text-sm leading-relaxed text-slate-600 font-serif">
                                                                     {change.description}
                                                                 </p>
                                                             </div>
