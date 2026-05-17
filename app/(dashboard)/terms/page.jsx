@@ -3,57 +3,76 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 
-const privacyEntries = [
+const termsEntries = [
   {
-    date: "Data Collection",
-    version: "What we collect",
-    title: "1. Information We Collect",
+    date: "Agreement",
+    version: "Acceptance",
+    title: "1. Acceptance of Terms",
     changes: [
       {
-        type: "Tasks",
-        description: "Local Storage: We save your tasks, priorities, due dates, and completion statuses entirely in your browser's local storage (localStorage). Your data is never uploaded to any remote server.",
+        type: "Consent",
+        description: "Local App Terms: By accessing or using Taskify, you agree to be bound by these Terms of Service. This is a local-first web application designed for personal use.",
       },
       {
-        type: "Analytics",
-        description: "Stats Dashboard: We process your task history and completion metrics locally to generate your productivity insights. These statistics are entirely private to your device.",
+        type: "Eligibility",
+        description: "Minimum Age: You must be at least 13 years old to utilize the local browser storage features and productivity tools of Taskify.",
       },
       {
-        type: "Focus",
-        description: "Pomodoro Timer: Focus session durations, custom settings, and countdown configurations are stored and processed purely inside your local browser window.",
+        type: "Modifications",
+        description: "App Updates: We may update the application code to introduce new features. Your local browser storage will remain intact and will automatically migrate during code updates.",
       }
     ]
   },
   {
-    date: "Infrastructure",
-    version: "Local-First Storage",
-    title: "2. Data Processing & Storage",
+    date: "Accounts & Data",
+    version: "Ownership & Control",
+    title: "2. Data Control & Ownership",
     changes: [
       {
-        type: "Storage",
-        description: "Browser Storage: Since we do not run database servers, your productivity data resides strictly in your browser. Clearing your browser's cache or site data will delete your tasks.",
-      },
-      {
-        type: "Privacy",
-        description: "No Accounts Required: We do not require you to sign up, create an account, or provide personal details. Your identity is completely hidden and secure.",
+        type: "Local Control",
+        description: "Offline Control: You are in complete control of your tasks. All task lists, focus history, and priorities are kept in your browser's local storage (localStorage).",
       },
       {
         type: "Ownership",
-        description: "Full Ownership: You retain 100% ownership and control over your tasks. We do not have any access to your data, and we cannot see, modify, or recover your lists.",
+        description: "Absolute Ownership: You own your tasks, schedules, and priorities. Because we run without a centralized database, we do not have access to, nor do we backup, your information.",
+      },
+      {
+        type: "No Backups",
+        description: "Data Responsibility: You are responsible for safeguarding your tasks. Clearing your browser's cache or website data will remove your lists, as we have no database backup to restore them from.",
       }
     ]
   },
   {
-    date: "Protection",
-    version: "Device Security",
-    title: "3. How We Protect Your Data",
+    date: "Service Availability",
+    version: "Local Running",
+    title: "3. Service Availability & Pricing",
     changes: [
       {
-        type: "Security",
-        description: "Local Isolation: Your data never travels across the internet. It is isolated within your device's secure browser sandbox, protected from external network threats.",
+        type: "Offline Usage",
+        description: "Offline Availability: Once served, Taskify is designed to work fully offline in your browser. Uptime is dependent on your device's browser availability.",
       },
       {
-        type: "No Tracking",
-        description: "Zero Background Telemetry: We do not gather background analytics, user behavioral tracking, or performance metrics. Your application usage is strictly confidential.",
+        type: "Local Metrics",
+        description: "Productivity Analytics: All statistics and timer tracking metrics are calculated directly on your device, ensuring maximum confidentiality.",
+      },
+      {
+        type: "Pricing",
+        description: "Free of Charge: Taskify is offered fully free of charge. Because we run without server hosting overheads for your data, there are no hidden subscription tiers or fees.",
+      }
+    ]
+  },
+  {
+    date: "Limitations",
+    version: "Legal Boundaries",
+    title: "4. Liability & Termination",
+    changes: [
+      {
+        type: "Termination",
+        description: "Data Clearing: You can terminate your use of Taskify at any moment simply by clearing your browser's site data or local storage.",
+      },
+      {
+        type: "As-Is Warranty",
+        description: "Provided 'As-Is': Taskify is provided on an 'as-is' and 'as-available' basis without warranties. We are not liable for any lost productivity or task data loss.",
       }
     ]
   }
@@ -77,17 +96,17 @@ const AnimationContainer = ({ children, delay = 0 }) => (
   </motion.div>
 )
 
-const PrivacyPage = () => {
+const TermsPage = () => {
     return (
         <section className="bg-background min-h-screen relative overflow-hidden">
             <Wrapper>
                 <AnimationContainer delay={0.1}>
                     <div className="max-w-4xl mx-auto pt-20 pb-16 px-6">
                         <div className="mb-12 text-center">
-                            <Badge variant="outline" className="mb-4 border-slate-200 font-serif">Privacy Policy</Badge>
-                            <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4 text-slate-900 tracking-tight">Your Privacy Matters</h1>
+                            <Badge variant="outline" className="mb-4 border-slate-200 font-serif">Terms of Service</Badge>
+                            <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4 text-slate-900 tracking-tight">Terms of Service</h1>
                             <p className="text-slate-500 text-lg max-w-2xl mx-auto font-serif">
-                                Taskify is designed from the ground up as a local-first application. Your tasks, timer history, and analytics never leave your device.
+                                Please review the terms, rights, and responsibilities associated with using Taskify's local-first task management application.
                             </p>
                         </div>
 
@@ -95,7 +114,7 @@ const PrivacyPage = () => {
                             {/* Vertical Line */}
                             <div className="absolute left-0 sm:left-1/2 top-4 bottom-4 w-[2px] bg-slate-200 -translate-x-1/2 hidden sm:block"></div>
 
-                            {privacyEntries.map((entry, entryIdx) => (
+                            {termsEntries.map((entry, entryIdx) => (
                                 <div key={entryIdx} className="relative">
                                     {/* Timeline Dot */}
                                     <div className="absolute left-0 sm:left-1/2 top-4 size-3 rounded-full bg-slate-900 -translate-x-1/2 ring-4 ring-white z-10 hidden sm:block"></div>
@@ -136,4 +155,4 @@ const PrivacyPage = () => {
     )
 }
 
-export default PrivacyPage
+export default TermsPage

@@ -28,13 +28,14 @@ export function useTasks() {
     }
   }, [tasks, isLoaded]);
 
-  const addTask = (title, dueDate = null) => {
+  const addTask = (title, dueDate = null, priority = "medium") => {
     if (!title.trim()) return;
     const newTask = {
       id: crypto.randomUUID(),
       title: title.trim(),
       completed: false,
       dueDate: dueDate ? dueDate.toISOString() : null,
+      priority: priority,
       createdAt: new Date().toISOString(),
     };
     setTasks((prev) => [newTask, ...prev]);
@@ -52,6 +53,14 @@ export function useTasks() {
     setTasks((prev) =>
       prev.map((task) =>
         task.id === id ? { ...task, dueDate: dueDate ? dueDate.toISOString() : null } : task
+      )
+    );
+  };
+
+  const updateTaskPriority = (id, priority) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, priority } : task
       )
     );
   };
@@ -85,6 +94,7 @@ export function useTasks() {
     addTask,
     toggleTask,
     updateTaskDueDate,
+    updateTaskPriority,
     deleteTask,
     clearCompleted,
     reorderTasks,

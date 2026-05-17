@@ -6,7 +6,7 @@ import { useApp } from "@/hooks/use-app";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, LayoutList, Calendar as CalendarIcon } from "lucide-react";
+import { Plus, LayoutList, Calendar as CalendarIcon, Flag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DraggableTaskList } from "@/components/draggable-task-list";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,12 +24,14 @@ export default function TasksPage() {
     toggleTask, 
     deleteTask, 
     updateTaskDueDate,
+    updateTaskPriority,
     clearCompleted,
     reorderTasks
   } = useTasks();
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDate, setNewTaskDate] = useState(null);
+  const [newTaskPriority, setNewTaskPriority] = useState("medium");
   const [filter, setFilter] = useState("all");
 
   const handleAddTask = (e) => {
@@ -39,9 +41,10 @@ export default function TasksPage() {
       return;
     }
     if (newTaskTitle.trim()) {
-      addTask(newTaskTitle, newTaskDate);
+      addTask(newTaskTitle, newTaskDate, newTaskPriority);
       setNewTaskTitle("");
       setNewTaskDate(null);
+      setNewTaskPriority("medium");
       toast.success("Task Created", { description: `"${newTaskTitle}" has been added.` });
     }
   };
@@ -82,7 +85,56 @@ export default function TasksPage() {
                     className="bg-transparent border-slate-200 focus-visible:ring-slate-900 h-12 text-lg rounded-full font-serif pl-6 shadow-sm"
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className={cn(
+                          "h-12 px-6 rounded-full font-serif border-slate-200 transition-colors gap-2",
+                          newTaskPriority === "low" && "text-emerald-700 border-emerald-300 bg-emerald-50 hover:bg-emerald-100",
+                          newTaskPriority === "medium" && "text-amber-700 border-amber-300 bg-amber-50 hover:bg-amber-100",
+                          newTaskPriority === "high" && "text-rose-700 border-rose-300 bg-rose-50 hover:bg-rose-100"
+                        )}
+                      >
+                        <Flag className={cn(
+                          "h-4 w-4 fill-current",
+                          newTaskPriority === "low" && "text-emerald-500",
+                          newTaskPriority === "medium" && "text-amber-500",
+                          newTaskPriority === "high" && "text-rose-500"
+                        )} />
+                        <span className="capitalize">{newTaskPriority}</span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-40 p-1.5 border border-slate-100 shadow-xl rounded-xl bg-white" align="center">
+                      <div className="flex flex-col gap-1">
+                        {["low", "medium", "high"].map((p) => {
+                          const active = newTaskPriority === p;
+                          const iconColor = p === "low" ? "text-emerald-500" : p === "medium" ? "text-amber-500" : "text-rose-500";
+                          return (
+                            <button
+                              key={p}
+                              type="button"
+                              onClick={() => {
+                                setNewTaskPriority(p);
+                              }}
+                              className={cn(
+                                "w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-serif font-medium flex items-center gap-2 transition-all",
+                                active
+                                  ? "bg-slate-100 text-slate-900 font-semibold"
+                                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+                              )}
+                            >
+                              <Flag className={cn("h-3 w-3 fill-current", iconColor)} />
+                              <span className="capitalize">{p} Priority</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" className={cn("h-12 px-6 rounded-full font-serif border-slate-200 hover:bg-slate-50 transition-colors", newTaskDate && "text-slate-900 border-slate-900 bg-slate-50")}>
@@ -143,6 +195,7 @@ export default function TasksPage() {
                   toggleTask={toggleTask}
                   deleteTask={deleteTask}
                   updateTaskDueDate={updateTaskDueDate}
+                  updateTaskPriority={updateTaskPriority}
                   reorderTasks={reorderTasks}
                 />
               )}

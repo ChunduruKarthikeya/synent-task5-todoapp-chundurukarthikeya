@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableTaskItem } from "./sortable-task-item";
 
-export function DraggableTaskList({ tasks, toggleTask, deleteTask, updateTaskDueDate, reorderTasks }) {
+export function DraggableTaskList({ tasks, toggleTask, deleteTask, updateTaskDueDate, updateTaskPriority, reorderTasks }) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -55,6 +55,7 @@ export function DraggableTaskList({ tasks, toggleTask, deleteTask, updateTaskDue
               toggleTask={toggleTask}
               deleteTask={deleteTask}
               updateTaskDueDate={updateTaskDueDate}
+              updateTaskPriority={updateTaskPriority}
             />
           ))}
         </div>
