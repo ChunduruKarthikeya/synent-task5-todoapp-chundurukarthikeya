@@ -42,6 +42,14 @@ export default function TasksPage() {
       return;
     }
 
+    const isDuplicate = tasks.some(
+      (task) => task.title.toLowerCase().trim() === newTaskTitle.toLowerCase().trim()
+    );
+    if (isDuplicate) {
+      toast.error("Duplicate Task", { description: "A task with this title already exists." });
+      return;
+    }
+
     if (!newTaskDate) {
       toast.error("Due Date Required", { description: "Please select a due date for the task." });
       return;
