@@ -31,22 +31,37 @@ export default function TasksPage() {
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDate, setNewTaskDate] = useState(null);
-  const [newTaskPriority, setNewTaskPriority] = useState("medium");
+  const [newTaskPriority, setNewTaskPriority] = useState(null);
   const [filter, setFilter] = useState("all");
 
   const handleAddTask = (e) => {
     e.preventDefault();
-    if (newTaskDate && isBefore(newTaskDate, startOfToday())) {
+    
+    if (!newTaskTitle.trim()) {
+      toast.error("Title Required", { description: "Please enter a task title." });
+      return;
+    }
+
+    if (!newTaskDate) {
+      toast.error("Due Date Required", { description: "Please select a due date for the task." });
+      return;
+    }
+
+    if (isBefore(newTaskDate, startOfToday())) {
       toast.error("Invalid Due Date", { description: "The due date cannot be set before today." });
       return;
     }
-    if (newTaskTitle.trim()) {
-      addTask(newTaskTitle, newTaskDate, newTaskPriority);
-      setNewTaskTitle("");
-      setNewTaskDate(null);
-      setNewTaskPriority("medium");
-      toast.success("Task Created", { description: `"${newTaskTitle}" has been added.` });
+
+    if (!newTaskPriority) {
+      toast.error("Priority Required", { description: "Please select a priority level." });
+      return;
     }
+
+    addTask(newTaskTitle, newTaskDate, newTaskPriority);
+    setNewTaskTitle("");
+    setNewTaskDate(null);
+    setNewTaskPriority(null);
+    toast.success("Task Created", { description: `"${newTaskTitle}" has been added.` });
   };
 
   const currentTasks = tasks
@@ -95,16 +110,18 @@ export default function TasksPage() {
                           "h-12 px-6 rounded-full font-serif border-slate-200 transition-colors gap-2",
                           newTaskPriority === "low" && "text-emerald-700 border-emerald-300 bg-emerald-50 hover:bg-emerald-100",
                           newTaskPriority === "medium" && "text-amber-700 border-amber-300 bg-amber-50 hover:bg-amber-100",
-                          newTaskPriority === "high" && "text-rose-700 border-rose-300 bg-rose-50 hover:bg-rose-100"
+                          newTaskPriority === "high" && "text-rose-700 border-rose-300 bg-rose-50 hover:bg-rose-100",
+                          !newTaskPriority && "text-slate-500 hover:bg-slate-50"
                         )}
                       >
                         <Flag className={cn(
-                          "h-4 w-4 fill-current",
-                          newTaskPriority === "low" && "text-emerald-500",
-                          newTaskPriority === "medium" && "text-amber-500",
-                          newTaskPriority === "high" && "text-rose-500"
+                          "h-4 w-4",
+                          newTaskPriority === "low" && "fill-current text-emerald-500",
+                          newTaskPriority === "medium" && "fill-current text-amber-500",
+                          newTaskPriority === "high" && "fill-current text-rose-500",
+                          !newTaskPriority && "text-slate-400"
                         )} />
-                        <span className="capitalize">{newTaskPriority}</span>
+                        <span className="capitalize">{newTaskPriority || "Priority"}</span>
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-40 p-1.5 border border-slate-100 shadow-xl rounded-xl bg-white" align="center">
@@ -137,9 +154,16 @@ export default function TasksPage() {
 
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" className={cn("h-12 px-6 rounded-full font-serif border-slate-200 hover:bg-slate-50 transition-colors", newTaskDate && "text-slate-900 border-slate-900 bg-slate-50")}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className={cn(
+                          "h-12 px-6 rounded-full font-serif border-slate-200 hover:bg-slate-50 transition-colors",
+                          newTaskDate && "text-slate-900 border-slate-900 bg-slate-50"
+                        )}
+                      >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {newTaskDate ? format(newTaskDate, "MMM d") : "Due Date"}
+                        {newTaskDate instanceof Date && !isNaN(newTaskDate) ? format(newTaskDate, "MMM d") : "Due Date"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 border-none shadow-2xl rounded-2xl" align="center">
